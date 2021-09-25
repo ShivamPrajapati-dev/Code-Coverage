@@ -1,0 +1,4 @@
+description;                    Open Date;      Event;          Qty;    Cost;       LT L/G; ST L/G;     Closed Date;    Proceeds
+Upst 04/16/2021 Put $100.00;	04/12/2021; 	Expiration; 	3;  	$0.00;  	$0.00; 	$374.98;	04/16/2021; 	$374.98
+UPST 04/16/2021 PUT $95.00; 	04/12/2021; 	Expiration; 	3;  	$210.00;	$0.00;	-$210.00; 	04/16/2021; 	$0.00
+
