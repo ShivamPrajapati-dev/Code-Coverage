@@ -2,7 +2,7 @@ const main = require("../index");
 
 var _output = {
   upst: {
-    longTermGain: 0,
+    longTermGain: 30,
     longTermLoss: 0,
     shortTermGain: 2374.95,
     shortTermLoss: -9880.080000000002,
@@ -11,7 +11,7 @@ var _output = {
 };
 
 describe("Calculate Gain, loss and wash loss", function () {
-  it("should return loss, again and wash loss", async function () {
+  it("should return loss, gain and wash loss", async function () {
     var result = await main("test_data/stocks.csv");
     expect(JSON.stringify(_output)).toEqual(JSON.stringify(result));
   });

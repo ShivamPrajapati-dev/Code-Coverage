@@ -2,7 +2,9 @@ const parseCSV = require("./services/parsecsv");
 const numberOfDays = require("./services/numberofdays");
 const parseCurrency = require("./services/parsecurrency");
 
-let uniqueGlobalStocks = {};
+let uniqueGlobalStocks = {}; // stores all the unique stocks
+
+// internal structure of a stock
 let stockComponent = {
   longTermGain: 0,
   longTermLoss: 0,
@@ -10,6 +12,8 @@ let stockComponent = {
   shortTermLoss: 0,
   washLoss: 0,
 };
+
+//gives stock name using description
 
 function getNameOfStock(description) {
   const name = description.split(" ")[0].toLowerCase();
@@ -19,12 +23,16 @@ function getNameOfStock(description) {
   return name;
 }
 
+// add to the wash loss of the stock
+
 function addWashLoss(start, end, current, stockDetails) {
   const name = getNameOfStock(stockDetails.description);
   if (numberOfDays(start, current) <= 30 || numberOfDays(end, current) <= 30) {
     uniqueGlobalStocks[name].washLoss += parseCurrency(stockDetails["ST L/G"]);
   }
 }
+
+// calculates gains and loss of a stock
 
 function calculateGainAndLoss(stockDetails) {
   const name = getNameOfStock(stockDetails.description);
@@ -42,6 +50,8 @@ function calculateGainAndLoss(stockDetails) {
     uniqueGlobalStocks[name].shortTermLoss += shortTermAmount;
   }
 }
+
+// calculates wash loss of a stock
 
 function calculateWashLoss(position, stockDetails, allGlobalStocksObjects) {
   const currentClosedDate = stockDetails["Closed Date"];
@@ -65,6 +75,8 @@ function calculateWashLoss(position, stockDetails, allGlobalStocksObjects) {
   }
 }
 
+// prints the desired output
+
 function printStocksData() {
   for (let stock in uniqueGlobalStocks) {
     console.log(`Stock name: ${stock}\n`);
@@ -76,6 +88,7 @@ function printStocksData() {
 }
 
 async function main(filename) {
+  // main function
   const allGlobalStocksObjects = await parseCSV(filename);
   for (let position = 0; position < allGlobalStocksObjects.length; position++) {
     const stockDetails = allGlobalStocksObjects[position];
